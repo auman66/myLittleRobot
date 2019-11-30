@@ -22,9 +22,9 @@ T_des = R.fkine([q_des])
 
 m=[1 1 0 0 0 1]';
 q0=[pi, -pi/2, -pi/2];  
-[sol_arr] = inv_kin_pso(R, T_des, q0, m);
-q_best = sol_arr(1, :);
-Tcomp = R.fkine(q_best)
+%[sol_arr] = inv_kin_pso(R, T_des, q0, m);
+[sol_arr] = inv_kin_rand_ikine(R, T_des, q0,m);
+
 
 %This just animates through all the solutions, so I can see a visual
 %difference
