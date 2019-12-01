@@ -1,4 +1,4 @@
-function [t, q, qd] = dyno_wrap(robot, t1, torqfun, q0, qd0, varargin)
+function [t, q, qd] = dyno_wrap(robot, t, torqfun, q0, qd0, varargin)
     %Forward Dynamics Wrapper Function
     
     
@@ -28,10 +28,11 @@ function [t, q, qd] = dyno_wrap(robot, t1, torqfun, q0, qd0, varargin)
         elseif length(tau) < n
             tau = [tau, zeros(1,n - length(tau))];
         end
-        [t,q,qd] = robot.fdyn(t1,t_fun,q0,qd0,tau);
-            
+        [t,q,qd] = robot.fdyn(t,t_fun,q0,qd0,tau);
+    elseif torqfun = 'PD'
+        [t,q,qd] = robot.fdyn(t,@pd_controller,q0,qd0,varargin{:});
     else
-        [t,q,qd] = robot.fdyn(t1,torqfun,q0,qd0,varargin{:});
+        [t,q,qd] = robot.fdyn(t,torqfun,q0,qd0,varargin{:});
     end
    
 
