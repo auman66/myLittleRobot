@@ -1,5 +1,5 @@
 
-function[z,y,x] = ang2rot(Rphi)
+function[z,y,x] = rot2ang(Rphi)
 
 %input is a rotation matrix
 %Rphi=[0.8830   -0.2115    0.4190;
