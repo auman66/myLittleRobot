@@ -1,10 +1,11 @@
 
+function[T]=HMT(z,y,x,vect)
 
-vect=[1 1 1]';
+%vect=[1 1 1]';
 %inputs for angles with respect to the baseframe
-z=20;
-y=40;
-x=80;
+%z=20;
+%y=40;
+%x=80;
 btmrow=[0 0 0];
 
 Zrad=z*pi/180;
@@ -86,3 +87,4 @@ end
 title('Transformed Frame')
 
 
+end
