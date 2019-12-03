@@ -1,4 +1,4 @@
-function [t_arr, q_arr] = PD_wrapper(R, xd_initial, xd_final, time, steps, P, D)
+function [t_arr, q_arr] = PD_wrapper(R, xd_initial, xd_final, time, steps, P, D, pd_space)
 %Given an initial and final position/orientation vector in operational
 %space, this function will produce a trajectory to get form one to another,
 %and then use a PD controller in joint space to perform the motion.
@@ -10,6 +10,7 @@ function [t_arr, q_arr] = PD_wrapper(R, xd_initial, xd_final, time, steps, P, D)
 %steps      - Number of steps to discretize trajectory into
 %P          - Proportional Gain Matrix
 %D          - Derivative Gain Matrix
+%pd_space   - String specifying either 
 
 
 
@@ -29,9 +30,9 @@ q = q_des_array(1, :);
 q_dot = q_dot0;
 for i = 1:length(q_des_array)
     q_des = q_des_array(i, :);
-    [t_arr_curr, q_arr_curr, q_dot_arr_curr] = dyno_wrap(R, 0.2632, 'PD', q, q_dot, q_des, P, D);
+    [t_arr_curr, q_arr_curr, q_dot_arr_curr] = dyno_wrap(R, (1/steps)*time, pd_space, q, q_dot, q_des, P, D);
     
-    t_arr = [t_arr; (i-1)*0.2632 + t_arr_curr];
+    t_arr = [t_arr; (i-1)*(1/steps)*time + t_arr_curr];
     q_arr = [q_arr; q_arr_curr];
     q_dot_arr = [q_dot_arr; q_dot_arr_curr];
     

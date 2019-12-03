@@ -29,7 +29,7 @@ function [t, q, qd] = dyno_wrap(robot, t, torqfun, q0, qd0, varargin)
             tau = [tau, zeros(1,n - length(tau))];
         end
         [t,q,qd] = robot.fdyn(t,t_fun,q0,qd0,tau);
-    elseif strcmp(torqfun,'PD')
+    elseif strcmp(torqfun,'PD_Joint')
         %Need to convert from world space to joint space for qstar
         [t,q,qd] = robot.fdyn(t,@pd_controller,q0,qd0,varargin{:});
     elseif ~isa(torqfun,'function_handle')
