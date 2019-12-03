@@ -1,51 +1,44 @@
-function [q] = inv_kin_JacInv(R, xd, xd_dot, m, T)
+function [q] = inv_kin_JacInv(R, xd)
 %inv_kin_JacInv: Uses iterative Jacobian Pseudo-Inverse Algorithm
 %to compute joint space values.
 %
 %R - SerialLink Object
-%xd - Time Series vector of desired Operational Space values of the form
-%     [x,y,z,phi, psi, theta]
-%xd_dot - Derivative of xd
-%m - masking vector for operational space 
-%T - Sampling Period for xd/xd_dot
-%
-%q - time series vector of joint space solutions
+%xd - [x,y,z,phi, psi, theta]
+%     
+%q - solution to Inv Kin Problem
 
 NUM_OF_JOINTS = length(R.config);
 
-q = zeros(NUM_OF_JOINTS, length(xd)); %Preallocate memory for storing joint space solutions
+q_arr = zeros(NUM_OF_JOINTS, length(xd)); %Preallocate memory for storing joint space solutions
 
-q(:,1) = rand(1, NUM_OF_JOINTS); %Set initial seed to rand vals (zeros are typically a singularity...)
+q_arr(:,1) = rand(1, NUM_OF_JOINTS); %Set initial seed to rand vals (zeros are typically a singularity...)
 
 %Gain Matrix 
-K=100*eye(3,3);
+K=100*eye(6,6);
 
-for i = 1:length(xd)
+MaxIter = 100;
+T = 0.001; %Integration Interval
+
+xd_repeat = repmat(xd', 1, MaxIter);
+
+
+for i = 1:MaxIter
     %Use Forward Kinematics to get Xe
-    Te = R.fkine(q(:, i), m);
+    Te = R.fkine(q_arr(:, i));
     xyz_e = transl(Te);    %Positional Components
     phi = tr2rpy(t2r(Te)); %Rotational Components
     
-    %Removes unused operational space components (due to redudancy)
-    xe_temp = [xyz_e', phi];
-    xe(:, i) = xe_temp(logical(m));
+    xe(:, i) = [xyz_e', phi];
     
-    %Removes unused operational space rows (due to redudancy)
-    Ja_temp = R.jacob0(q(:, i));
-    Ja = [Ja_temp(1:2, :); Ja_temp(end, :)];
+    Ja = R.jacob0(q_arr(:, i), 'rpy');
     
-    error(:,i)= xd(:,i) - xe(:,i);
-    size(error)
+    error(:,i)= xd_repeat(:,i) - xe(:,i);
     
-    q_dot = pinv(Ja)*(xd_dot(:, i)+K*error(:,i));
-    q(:,i+1)= q(:,i)+q_dot*T;
+    q_dot = pinv(Ja)*(K*error(:,i));
+    q_arr(:,i+1)= q_arr(:,i)+q_dot*T;
 end
 
-figure();
-plot(xe')
-figure();
-plot(xd')
-figure()
-plot(xd'-xe')
+q = q_arr(:, end);
+
 end
 
