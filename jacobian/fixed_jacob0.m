@@ -63,7 +63,7 @@ function J0 = fixed_jacob0(robot, q, varargin)
 	J0 = [R zeros(3,3); zeros(3,3) R] * Jn;
 
     if opt.rpy
-        rpy = tr2rpy( fkine(robot, q) );
+        rpy = sym_tr2rpy( fkine(robot, q) );
         B = rpy2jac(rpy);
         if rcond(B) < eps
             error('Representational singularity');
