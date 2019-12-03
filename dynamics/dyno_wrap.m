@@ -39,7 +39,7 @@ function [t, q, qd] = dyno_wrap(robot, t, torqfun, q0, qd0, varargin)
         temp_flipped = deblank(temp_flipped);  %remove trailing spaces of the flipped string
         temp_fun = temp_flipped(end:-1:1);  %flip the string back
         temp_fun = char(torqfun); %convert to a character array if it isn't already
-        t_fun = str2func(temp_fun)
+        t_fun = str2func(temp_fun);
         [t,q,qd] = robot.fdyn(t,t_fun,q0,qd0,varargin{:});
     else
         [t,q,qd] = robot.fdyn(t,torqfun,q0,qd0,varargin{:});
