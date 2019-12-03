@@ -17,6 +17,6 @@ x1 = [transl(T1)', tr2rpy(T1)];
 P = 100*eye(3);
 D = 10*eye(3);
 
-[t, q] = PD_interface(p3, xd, x1, 5.0, 50, P, D);
+[t, q] = PD_interface(p3, xd, x1, 20.0, 50, P, D, "PD_Joint");
 
 plot(t,q)
