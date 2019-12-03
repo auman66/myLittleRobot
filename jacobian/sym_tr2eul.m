@@ -11,6 +11,9 @@
 % If R (3x3xK) or T (4x4xK) represent a sequence then each row of EUL
 % corresponds to a step of the sequence.
 %
+% This is an updated version of the tr2eul function from robotic toolbox
+% to allow for symbolic jacobian calculation
+%
 % Options::
 %  'deg'      Compute angles in degrees (radians default)
 %  'flip'     Choose first Euler angle to be in quadrant 2 or 3.

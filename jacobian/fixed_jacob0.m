@@ -5,6 +5,9 @@
 % Jacobian matrix maps joint velocity to end-effector spatial velocity V =
 % J0*QD expressed in the world-coordinate frame.
 %
+% This is an updated version of the jacob0.m function from robotic toolbox
+% to allow for symbolic jacobian
+%
 % Options::
 % 'rpy'     Compute analytical Jacobian with rotation rate in terms of 
 %           roll-pitch-yaw angles

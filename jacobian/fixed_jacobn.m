@@ -5,6 +5,9 @@
 % matrix maps joint velocity to end-effector spatial velocity V = JN*QD in
 % the end-effector frame.
 %
+% This is an updated version of the jacobn.m function from robotic toolbox
+% to allow for symbolic jacobian
+%
 % Options::
 % 'trans'   Return translational submatrix of Jacobian
 % 'rot'     Return rotational submatrix of Jacobian 
