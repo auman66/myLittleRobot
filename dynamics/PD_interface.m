@@ -1,16 +1,16 @@
 function [t_arr, q_arr] = PD_interface(R, xd_initial, xd_final, time, steps, P, D, pd_space)
 %Given an initial and final position/orientation vector in operational
 %space, this function will produce a trajectory to get form one to another,
-%and then use a PD controller in joint space to perform the motion.
+%and then use a PD controller to perform the motion.
 
 %R          - Robot Serial Link
 %xd_initial - Initial operational space vector
 %xd_final   - Final operational space vector
-%time       - Total Time to get from initial to final point
+%time       - Total time to get from initial to final point (sec)
 %steps      - Number of steps to discretize trajectory into
 %P          - Proportional Gain
 %D          - Derivative Gain
-%pd_space   - String specifying either operational space or joint space 
+%pd_space   - String specifying either operational space or joint space ('PD_Oper' or 'PD_Joint') 
 
 NUM_OF_JOINTS = length(R.config);
 

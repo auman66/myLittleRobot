@@ -1,8 +1,16 @@
-function tau = joint_pd_controller(R,t,q,q_dot,x_desired,P,D)
-    %Torque function for PD Controller
-    %P is Proportional Term
-    %D is Derivative Term 
-    %t is not used
+function tau = oper_pd_controller(R,t,q,q_dot,x_desired,P,D)
+    %Torque function for PD Controller called by fdyn to create torque
+    %values
+    %R     Serial Link Object
+    %q     Current joint configuration of robot
+    %q_dot Current joint velocities of robot
+    %
+    %NOTE: R, q, and q_dot are passed in by fdyn
+    %
+    %x_desired  Vector of desired joint space variables
+    %P     Proportional Term
+    %D     Derivative Term 
+    %t     Not used
     
     T_curr = R.fkine(q);
     x_curr = [transl(T_curr)', tr2rpy(T_curr)];
