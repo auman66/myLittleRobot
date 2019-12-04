@@ -1,4 +1,4 @@
-function [t_arr, q_arr] = PD_wrapper(R, xd_initial, xd_final, time, steps, P, D, pd_space)
+function [t_arr, q_arr] = PD_interface(R, xd_initial, xd_final, time, steps, P, D, pd_space)
 %Given an initial and final position/orientation vector in operational
 %space, this function will produce a trajectory to get form one to another,
 %and then use a PD controller in joint space to perform the motion.
