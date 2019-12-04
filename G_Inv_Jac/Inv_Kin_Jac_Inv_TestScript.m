@@ -10,6 +10,6 @@ L{5} = Link('theta', 0, 'a', 0.5, 'alpha', 0, 'prismatic');
 
 R = SerialLink([L{1} L{2} L{3} L{4} L{5}]);
 
-xd = [0.7, 0.2, 1, 0, 0, pi/2];
-
+xd = [0.7, 0.2, 1, pi, 0, pi/4];
+xe = [0, 0, 0, 0, 0, pi/4];
 q = inv_kin_JacInv(R, xd); 
