@@ -1,10 +1,12 @@
 
-function[Rphi] = ang2rot(z,y,x)
+function[Rphi] = ang2rot(x, y, z)
+% Create a rotation matrix based on Euler angle rotations
+% R=ang2rot(x, y, z)
+% Given the Z Y X angles in degrees, the ang2rot function will create a 
+% rotation matrix corresponding to the given angles. The function will 
+% output the rotation matrix and generate a plot showing the rotating 
+% frame. The rotation is plotted. 
 
-%inputs for angles with respect to the baseframe
-%  z=20;
-%  y=20;
-%  x=20;
 
 Zrad=z*pi/180;
 Yrad=y*pi/180;
@@ -58,38 +60,5 @@ for i = 1:3
     end
 end
 title('Rotated Matrix')
-
-
-% rotmZYZ=myrotmat(pi/3, 'z')*myrotmat(pi/2, 'y')*myrotmat(pi/6, 'z')
-% rotmZYZ = eul2r(pi/3, pi/2, pi/6)
-% p = [2.5 2.5 3.5]';
-% axis_start = p;
-% figure(2)
-% for i=1:3
-%     axis_end(:,i) = axis_start + rotmZYZ(:,i);
-% end
-% plot3(p(1), p(2), p(3), 'o');
-% grid on
-% hold on
-% for i = 1:3
-%     h=plot3([axis_start(1) axis_end(1,i)],...
-%         [axis_start(2) axis_end(2,i)],...
-%         [axis_start(3) axis_end(3,i)]);
-%     if i==1
-%         h.Color='red';
-%     elseif i==2
-%         h.Color='green';
-%     else
-%         h.Color='blue';
-%     end
-% end
-% title('Part 2')
-% R01=R; R02=rotmZYZ; 
-% R21=(R01'*R02)'
-
-
-
-
- 
  
 end
