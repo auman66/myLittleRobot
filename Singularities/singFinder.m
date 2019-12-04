@@ -1,26 +1,27 @@
 function [sings, doubles] = singFinder(robot,div)
-%Finds single and doulbe joint singularities for robot
-%   
-% Single Joint Singularity: 
-%   When a single joint in a specific orientation cauases a singularity.
-% Double Joint Singularity:
-%   When a pair of joints in a specific orientation casuse a singularity.
+% Finds single joint and coupled joint singularities for a robot
+%
+% [sings, couples] = singFinder(robot,div) outputs two matrices that list 
+% single and coupled singularities for robot. sings is a 2xN matrix, where 
+% N is the number of discovered single joint singularities. The first 
+% column is the joint index and the second column is the joint angle that 
+% causes a singularity. couples is a 4xN matrix, where N is the number of 
+% discovered coupled joint singularities. The first column is the joint 
+% index of the first joint, the second column is the joint angle of the 
+% first joint, the third column is the index of the second joint, and the 
+% fourth column is the joint angle of the second joint. 
+% 
+% Options
+% - div is an optional parameter that denotes the number of steps when 
+%   finding possible singularities. The default value is 96.
+% 
+% Notes
+% - Singularities are found by trying a large number of joint 
+%   configurations and testing to see if each one is a singularity. 
+%   Specifically, this functions holds all the joint angles constant and 
+%   then varies one or two joints at a time in order to find singularities.
+% - This function will not find all robot singularities. More may exist.
 
-% Output:
-% Singles => [joint # , angle of singularity]
-% Doubles => [first joint, first angle, second joint, second angle] 
-
-% Singularities are found by trying a large number of joint configurations
-% and testing to see if each one is a singularity. Specifically, this
-% functions holds all the joint angles constant and then varies one or two
-% joints at a time in order to find singularities
-
-% WARNING: this function will not find all robot singularities. More may
-% exist!!!
-
-% Output:
-% if only one value, will return single singularities
-% if two values will return single and double singularities
 
 
     %set default value for div
