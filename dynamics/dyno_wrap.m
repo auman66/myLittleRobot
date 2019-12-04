@@ -31,7 +31,9 @@ function [t, q, qd] = dyno_wrap(robot, t, torqfun, q0, qd0, varargin)
         [t,q,qd] = robot.fdyn(t,t_fun,q0,qd0,tau);
     elseif strcmp(torqfun,'PD_Joint')
         %Need to convert from world space to joint space for qstar
-        [t,q,qd] = robot.fdyn(t,@pd_controller,q0,qd0,varargin{:});
+        [t,q,qd] = robot.fdyn(t,@joint_pd_controller,q0,qd0,varargin{:});
+    elseif strcmp(torqfun, 'PD_Oper')
+        [t,q,qd] = robot.fdyn(t,@oper_pd_controller,q0,qd0,varargin{:});
     elseif ~isa(torqfun,'function_handle')
         %clean up the input to remove any leading or trailing spaces
         temp_fun = deblank(torqfun);  %remove trailing spaces
