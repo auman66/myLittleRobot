@@ -1,4 +1,11 @@
-function [sol_arr] = inv_kin_rand_ikine(R, T_des, q0,m);
+function [sol_arr] = inv_kin_rand_ikine(R, T_des, q0);
+%Given a homogeneous transformation matrix corresponging to a desired
+%end-efector pose and orientation, this function will return a
+%corresponding joint space vector, and possibly multiple solutions if they
+%can be found
+%R     SerialLink Object
+%T_des homogeneous transformation matrix corresponging to a desired end-efector pose and orientation
+%q0 - and initial guess to try 
 
 MaxIter = 50;
 num_of_joint_vars = length(R.config);
@@ -6,9 +13,9 @@ num_of_joint_vars = length(R.config);
 inv_q = zeros(MaxIter, num_of_joint_vars);
 inv_q(1, 1:num_of_joint_vars) = q0;
 
-inv_q(1, 1:num_of_joint_vars) = R.ikine(T_des, rand(1,num_of_joint_vars).*q0, m);
+inv_q(1, 1:num_of_joint_vars) = R.ikunc(T_des, rand(1,num_of_joint_vars).*q0);
 for i = 2:MaxIter
-    inv_q(i, 1:num_of_joint_vars) = R.ikine(T_des, -0.5+rand(1,num_of_joint_vars).*inv_q(i, 1:num_of_joint_vars), m);
+    inv_q(i, 1:num_of_joint_vars) = R.ikunc(T_des, -0.5+rand(1,num_of_joint_vars).*inv_q(i, 1:num_of_joint_vars));
 end
 
     revolute_mask = (R.config == 'R'); %Logical array for joints that are
