@@ -6,7 +6,9 @@ function [sol_arr] = inv_kin_rand_ikine(R, T_des, q0);
 %R     SerialLink Object
 %T_des homogeneous transformation matrix corresponging to a desired end-efector pose and orientation
 %q0 - and initial guess to try 
-
+%
+%sol_arr - solutions to the inverse kinematics problem. If multiple
+%solutions are found, it will return them also
 MaxIter = 50;
 num_of_joint_vars = length(R.config);
 

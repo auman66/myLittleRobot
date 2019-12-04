@@ -1,5 +1,5 @@
 function [q_dot] = inv_diff_kin(R, ve, q_pose)
-      %Inputs:
+      %R - SerialLink Object
       %ve - specifc end-effector velocity
       %q_pose - specific pose the robot is in
       
