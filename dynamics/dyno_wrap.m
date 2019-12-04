@@ -1,12 +1,30 @@
 function [t, q, qd] = dyno_wrap(robot, t, torqfun, q0, qd0, varargin)
-    %Forward Dynamics Wrapper Function
-    
-    
-    %Need to make sure there are robot values for m, r, I, G, Jm
+% Wrapper function for forward dynamics with robotic toolbox
+%  
+% [T,Q,QD] = dyno_wrap(robot, t, torqfun, q0, qd0, varargin) returns the 
+% results from the robotics toolbox fdyn function. This wrapper makes it 
+% easier to use with the MLR GUI. 
+% 
+% See the fdyn function in the robotics toolbox for more information.
+% 
+% Inputs
+% - robot 		Serial Link Object
+% - t 		Time  interval 0 to t
+% - torqfun	Torque function
+% - q0  	Initial joint position
+% - qd0 	Initial joint velocities
+% - varagin	Arguments passed to the torque function
+% 
+% Options
+% - torqfun can be a pointer to a torque function, the name of a torque 
+%   function, or a predefined torque function.
+% - torqfun = ?constant? will use a constant torque function
+%   - varagin => T is a 1xN vector of torques and N is the number of joints
+% - torqfun = ?PD? will use a constant torque function
+%   - varagin => P is Proportional Gain
+%   - varagin => D is Derivative Gain
 
-    %Need to determine direction of gravity and friction on/off
-    %     R.nofriction;
-    %     R.gravity = [0 0 -1];n = robot.n;
+
     n = robot.n;
     if nargin == 2
         torqfun = 0;
@@ -46,9 +64,6 @@ function [t, q, qd] = dyno_wrap(robot, t, torqfun, q0, qd0, varargin)
     else
         [t,q,qd] = robot.fdyn(t,torqfun,q0,qd0,varargin{:});
     end
-   
-
-
-
 end
+
 
